@@ -97,6 +97,9 @@
     </div>
       <!-- card body ends -->
 
+      <form action="">
+        {% csrf_token %}
+      </form>
 
     <!-- AJAX Test -->
 
@@ -111,12 +114,14 @@
             var buttonValue = this.innerText; // Get the text content of the clicked button
             console.log('Clicked button value:', buttonValue)
 
+            const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
             // Now you can send the buttonValue to the Django server using AJAX
             $.ajax({
               url: '{% url 'pdf' %}',
               type: 'POST',
               headers: {
-              'X-CSRFToken': '6khWzd7yxnVdvDONzcfqQBQYnJTiGI4IIVqVL21MTHFs7X6ZO7jWf4bTagvabm8p'  // Include CSRF token in headers
+              'X-CSRFToken': csrfToken  // Include CSRF token in headers
               },
               data: { 'message': buttonValue },
               success: function(response) {

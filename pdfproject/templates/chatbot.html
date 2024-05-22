@@ -146,6 +146,9 @@
             <button type="submit" class="button1">Go</button>    
       </form>
       <!-- form ends -->
+      <form action="">
+        {% csrf_token %}
+      </form>
 
 
       <script>
@@ -161,12 +164,13 @@
                 sentMessage.innerHTML = searchValue;
                 sentMessageContainer.appendChild(sentMessage);
                 
+                const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
                 // Now you can send the searchValue to the Django server using AJAX
                 $.ajax({
                     url: '{% url 'chat' %}',
                     type: 'POST',
                     headers: {
-                        'X-CSRFToken': '6khWzd7yxnVdvDONzcfqQBQYnJTiGI4IIVqVL21MTHFs7X6ZO7jWf4bTagvabm8p' // Include CSRF token in headers
+                        'X-CSRFToken': csrfToken // Include CSRF token in headers
                     },
                     data: { 'prompt': searchValue },
                     success: function (response) {

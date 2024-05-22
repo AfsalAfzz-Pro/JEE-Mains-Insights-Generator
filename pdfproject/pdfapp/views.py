@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 
 import google.generativeai as genai
 import markdown
-from Data_Processing import file_hunt, ai_response, stream_chat
+from .Data_Processing import file_hunt, ai_response, stream_chat
 # Create your views here.
 last_appended = []
 
@@ -38,7 +38,7 @@ def pdf_data(request):
         ai_resp = markdown.markdown(ai_response(path=target))
         last_appended.append(ai_resp)
         html = render_to_string('chatbot.html', {'data':ai_resp, 'filename':message})
-        return JsonResponse(html, safe=False)
+        return JsonResponse(request, html, safe=False)
     
 
 def chatbot(request):
@@ -49,7 +49,7 @@ def chatbot(request):
         # response_data = {'response':'yes sure why not'}
         response_data = markdown.markdown(stream_chat(prompt))
         # html = render_to_string('chatbot.html', {'response':'yes sure why not'})
-        return JsonResponse(response_data, safe=False)
+        return JsonResponse(request, response_data, safe=False)
 
 
 

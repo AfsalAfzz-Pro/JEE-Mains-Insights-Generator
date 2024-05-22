@@ -4,13 +4,15 @@ import markdown
 import os
 from dotenv import load_dotenv
 
+
 # Load environment variables from .env file
 load_dotenv()
 
 # Access API key
 API_KEY = os.getenv('API_KEY')
 
-pdf_folder = "C:/Users/Hp/Documents/Organized Folders/Project Files/PDF Text Extractor/Pdf" 
+# pdf_folder = "C:/Users/Hp/Documents/Organized Folders/Project Files/PDF Text Extractor/Pdf" 
+pdf_folder = "pdfapp/Pdf" 
 
 genai.configure(api_key=API_KEY)
 generation_config = {
