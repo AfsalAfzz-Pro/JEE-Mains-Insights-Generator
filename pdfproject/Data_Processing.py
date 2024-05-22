@@ -58,30 +58,30 @@ chat_session = model.start_chat(
 
 
 def file_hunt():
-    pdf_folder1 = "C:/Users/Hp/Documents/Organized Folders/Project Files/PDF Text Extractor/Pdf/2024_April" 
-    pdf_folder2 = "C:/Users/Hp/Documents/Organized Folders/Project Files/PDF Text Extractor/Pdf/2024_Jan"
+    # pdf_folder1 = "C:/Users/Hp/Documents/Organized Folders/Project Files/PDF Text Extractor/Pdf/2024_April" 
+    # pdf_folder2 = "C:/Users/Hp/Documents/Organized Folders/Project Files/PDF Text Extractor/Pdf/2024_Jan"
 
     pdf_paths = []
 
     filenames = []
 
-    for filename in os.listdir(pdf_folder1):
+    for filename in os.listdir(pdf_folder):
         if filename.endswith(".pdf"):
             # Construct the path to the PDF file
             filenames.append(filename)
-            pdf_path = os.path.join(pdf_folder1, filename)
+            pdf_path = os.path.join(pdf_folder, filename)
             # print(pdf_path)
             # print(filename[29:44])
             pdf_paths.append(pdf_path)
 
-    for filename in os.listdir(pdf_folder2):
-        if filename.endswith(".pdf"):
-            # Construct the path to the PDF file
-            filenames.append(filename)
-            # print(filename[29:44])
-            pdf_path = os.path.join(pdf_folder2, filename)
-            # print(pdf_path)
-            pdf_paths.append(pdf_path)
+    # for filename in os.listdir(pdf_folder2):
+    #     if filename.endswith(".pdf"):
+    #         # Construct the path to the PDF file
+    #         filenames.append(filename)
+    #         # print(filename[29:44])
+    #         pdf_path = os.path.join(pdf_folder2, filename)
+    #         # print(pdf_path)
+    #         pdf_paths.append(pdf_path)
 
 
     pdf_data = []
