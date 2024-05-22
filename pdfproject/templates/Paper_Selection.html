@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+    <style>
+        body{
+            background: rgb(2,0,36);
+            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(54,9,121,1) 100%, rgba(0,212,255,1) 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .card {
+            width: 400px;
+            height: 500px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            /* position: absolute; */
+
+            }
+        .card-content {
+            padding: 3px 20px;
+            }
+        .heading {
+            color: #fff;
+        }
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns */
+            grid-gap: 10px; /* Gap between buttons */
+            }
+        .button-grid button {
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            }
+            #choose_paper {
+                padding-left: 110px;
+            }
+
+            
+.button1 {
+  padding: 12.5px 30px;
+  border: 0;
+  border-radius: 100px;
+  background-color: #2ba8fb;
+  color: #ffffff;
+  font-weight: Bold;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+}
+
+.button1:hover {
+  background-color: #6a31db;
+  box-shadow: 0 0 20px #6fc5ff50;
+  transform: scale(1.1);
+}
+
+.button1:active {
+  background-color: #3d94cf;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+  box-shadow: none;
+  transform: scale(0.98);
+}
+
+
+    </style>
+</head>
+<body>
+    <!-- heading -->
+    <h1 class="heading"><span>Which Question Paper would you like to ask about?</span></h1>
+    <!-- heading end -->
+
+     <!-- card body -->
+     <div class="card">
+        <div class="card-content">
+          <!-- Your card content goes here -->
+          <h2 id="choose_paper">Choose Paper</h2>
+          <div class="button-grid">
+            {% for file in files %}
+              <button class="button1" type="button" data-button-id="btn{{ forloop.counter }}">{{ file }}</button>
+            {% endfor %}
+          </div>
+        </div>
+    </div>
+      <!-- card body ends -->
+
+
+    <!-- AJAX Test -->
+
+  
+
+    <script>
+
+       document.addEventListener('DOMContentLoaded', function() {
+        // Loop through each button and attach event listener
+        document.querySelectorAll('.button1').forEach(function(button) {
+            button.addEventListener('click', function() {
+            var buttonValue = this.innerText; // Get the text content of the clicked button
+            console.log('Clicked button value:', buttonValue)
+
+            // Now you can send the buttonValue to the Django server using AJAX
+            $.ajax({
+              url: '{% url 'pdf' %}',
+              type: 'POST',
+              headers: {
+              'X-CSRFToken': '6khWzd7yxnVdvDONzcfqQBQYnJTiGI4IIVqVL21MTHFs7X6ZO7jWf4bTagvabm8p'  // Include CSRF token in headers
+              },
+              data: { 'message': buttonValue },
+              success: function(response) {
+                console.log('Message sent successfully!');
+                $("body").html(response);
+              },
+       
+            error: function(xhr, status, error) {
+            console.error('Error sending message:', error);
+            // Handle error if needed
+            }
+        });
+        })
+            });
+        });
+    </script>
+      
+        
+
+
+</body>
+</html>
