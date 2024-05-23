@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Chat with Paper</title>
     <style>
         body{
             background: rgb(2,0,36);
@@ -146,6 +146,7 @@
             <button type="submit" class="button1">Go</button>    
       </form>
       <!-- form ends -->
+
       <form action="">
         {% csrf_token %}
       </form>
@@ -163,8 +164,11 @@
                 sentMessage.classList.add('sent');
                 sentMessage.innerHTML = searchValue;
                 sentMessageContainer.appendChild(sentMessage);
-                
-                const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+                console.log('reeeeeeeeee')
+                let cookie = document.cookie
+                let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
+                console.log(searchValue)
+                console.log(csrfToken)
                 // Now you can send the searchValue to the Django server using AJAX
                 $.ajax({
                     url: '{% url 'chat' %}',
@@ -179,7 +183,8 @@
                          // Append sent message only after receiving the response
                         
 
-
+                        console.log('reponse')
+                        console.log(response)
                         var messageContainer = document.querySelector('#reciever'); // Assuming this is the container for received messages
                         var newMessage = document.createElement('p');
                         newMessage.classList.add('message');
