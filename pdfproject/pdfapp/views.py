@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 import urllib.parse
 from django.template.loader import render_to_string
+from django.template import RequestContext
 
 import google.generativeai as genai
 import markdown
 from .Data_Processing import file_hunt, ai_response, stream_chat
+
 # Create your views here.
 last_appended = []
 
@@ -38,7 +40,8 @@ def pdf_data(request):
         ai_resp = markdown.markdown(ai_response(path=target))
         last_appended.append(ai_resp)
         html = render_to_string('chatbot.html', {'data':ai_resp, 'filename':message})
-        return JsonResponse(request, html, safe=False)
+        # return render_to_response('my_template.html', context=html, context_instance=RequestContext(request))
+        return JsonResponse(RequestContext(request), html, safe=False)
     
 
 def chatbot(request):
