@@ -75,6 +75,25 @@
   transform: scale(0.98);
 }
 
+#loading-animation {
+  display: none;
+  position: fixed;
+  top: 50%;
+  /* left: 50%; */
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border: 4px solid #f3f3f3;
+  border-radius: 50%;
+  border-top-color: #6a31db; /* Animation color */
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 
     </style>
 </head>
@@ -101,9 +120,14 @@
         {% csrf_token %}
       </form>
 
-    <!-- AJAX Test -->
 
-  
+    <div id="loading-animation">
+      
+    </div>
+
+
+
+    <!-- AJAX Test -->
 
     <script>
 
@@ -116,6 +140,9 @@
 
             const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
 
+            // Show loading animation
+            document.getElementById('loading-animation').style.display = 'block';
+
             // Now you can send the buttonValue to the Django server using AJAX
             $.ajax({
               url: '{% url 'pdf' %}',
@@ -126,6 +153,9 @@
               data: { 'message': buttonValue },
               success: function(response) {
                 console.log('Message sent successfully!');
+                // Hide loading animation after successful response
+                document.getElementById('loading-animation').style.display = 'none';
+
                 $("body").html(response.html);
               },
        

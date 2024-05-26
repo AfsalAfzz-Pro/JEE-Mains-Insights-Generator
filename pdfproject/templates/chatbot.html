@@ -19,13 +19,29 @@
         .card {
             width: 800px;
             height: 450px;
-            background-color: #fff;
+            background-color: rgb(255, 255, 255);
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             overflow: auto;
+            outline: 1px solid transparent; /* Fallback for border radius */
             /* position: absolute; */
+        }
 
-            }
+    .card::-webkit-scrollbar { /* Target WebKit scrollbar (Chrome, Safari) */
+        width: 10px; /* Adjust scrollbar width */
+        height: 10px; /* Adjust scrollbar height */
+        }
+
+        .card::-webkit-scrollbar-track { /* Style the scrollbar track */
+        background-color: #f1f1f1; /* Change track color */
+        }
+
+        .card::-webkit-scrollbar-thumb { /* Style the scrollbar thumb */
+        background-color: #cccccc; /* Change thumb color */
+        border-radius: 5px; /* Add rounded corners to the thumb */
+        }
+
+            
         .card-content {
             padding: 5px 7px;
             }
@@ -42,7 +58,8 @@
         }
         
         .received {
-            background-color: #ec7777; /* Color for received messages */
+            background-color:  rgb(69, 21, 141); /* Color for received messages */
+            color: white;
             max-width: 70%;
             }            
 
@@ -50,6 +67,7 @@
             background-color: #3498db; /* Color for sent messages */
             color: white; /* Text color for sent messages */
             float: right;
+            margin-bottom: 10px;
             }    
         .f {
             margin-top: 15px;
@@ -105,8 +123,6 @@
 
 
 
-
-
     </style>
 </head>
 <body>
@@ -152,11 +168,14 @@
       </form>
 
 
+
+
       <script>
       document.querySelectorAll('.button1').forEach(function (button) {
             button.addEventListener('click', function () {
                 event.preventDefault();
                 var searchValue = document.getElementById('search').value;
+                document.getElementById('search').value='';
 
                 var sentMessageContainer = document.querySelector("#reciever");
                 var sentMessage = document.createElement('p');
@@ -164,6 +183,19 @@
                 sentMessage.classList.add('sent');
                 sentMessage.innerHTML = searchValue;
                 sentMessageContainer.appendChild(sentMessage);
+
+
+                var messageContainer = document.querySelector('#reciever'); // Assuming this is the container for received messages
+
+                var newMessage = document.createElement('p');
+                newMessage.classList.add('message');
+                newMessage.classList.add('received');
+                newMessage.innerHTML = 'Generating Answers...'
+                messageContainer.appendChild(newMessage);
+                
+                
+
+
                 console.log('reeeeeeeeee')
                 let cookie = document.cookie
                 let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
@@ -186,9 +218,6 @@
                         console.log('reponse')
                         console.log(response)
                         var messageContainer = document.querySelector('#reciever'); // Assuming this is the container for received messages
-                        var newMessage = document.createElement('p');
-                        newMessage.classList.add('message');
-                        newMessage.classList.add('received');
                         newMessage.innerHTML = response;
                         messageContainer.appendChild(newMessage);
 
