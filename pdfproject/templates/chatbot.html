@@ -171,6 +171,15 @@
 
 
       <script>
+
+        const card = document.querySelector('.card');
+
+        function scrollToBottom() {
+        card.scrollTop = card.scrollHeight;
+        }
+
+    
+
       document.querySelectorAll('.button1').forEach(function (button) {
             button.addEventListener('click', function () {
                 event.preventDefault();
@@ -184,6 +193,7 @@
                 sentMessage.innerHTML = searchValue;
                 sentMessageContainer.appendChild(sentMessage);
 
+                scrollToBottom();
 
                 var messageContainer = document.querySelector('#reciever'); // Assuming this is the container for received messages
 
@@ -193,7 +203,7 @@
                 newMessage.innerHTML = 'Generating Answers...'
                 messageContainer.appendChild(newMessage);
                 
-                
+                scrollToBottom();
 
 
                 console.log('reeeeeeeeee')
@@ -243,7 +253,8 @@
                         newMessage.innerHTML = response;
                         messageContainer.appendChild(newMessage);
 
-                       
+                        scrollToBottom();
+                        
                     },
                     error: function (xhr, status, error) {
                         console.error('Error sending message:', error);
