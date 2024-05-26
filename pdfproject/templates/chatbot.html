@@ -197,8 +197,30 @@
 
 
                 console.log('reeeeeeeeee')
-                let cookie = document.cookie
-                let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
+
+                // let cookie = document.cookie
+                // let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
+                function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie != '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = cookies[i].trim();
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+
+                const csrf_token = getCookie("csrftoken");
+
+        
+                var csrfToken = csrf_token
+
                 console.log(searchValue)
                 console.log(csrfToken)
                 // Now you can send the searchValue to the Django server using AJAX
